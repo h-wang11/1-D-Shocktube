@@ -1,21 +1,27 @@
       SUBROUTINE Set_Up
+      USE Chem
       USE Global
       IMPLICIT NONE
       INTEGER :: I
       
 C     ============================Initialization============================
+C     CHEMIKIN & Transport Initialization
+      CALL CHEM_INIT
+      CALL TRAN_INIT
 C     Number of Species
-      Ns=9
+      Ns=KK
+      Ns1=Ns-1
 C     Total Number of Conserved Variables
       NT= Ns + 3
+      NT1=NT-1
 
 C     Type of Re-Consturction [ 0=No Reconstruction, 1= 3rd-MUSCL + XQ_Limiter ]
       ReConstruct_TYPE= 0
 C     Re-Constructed Variables [ 1= Primitive, 2= Conserved ]
       ReConstruct_PC= 1
 
-C     Dt
-      dt=1.0E-8
+C     Dt [ s ]
+      dt=1.0E-7_8
 C     Node Number
       N=400
       N1p=N+1;N3p=N+3;N1m=N-1
@@ -28,22 +34,18 @@ C     Allocate Memory
       ALLOCATE(      Tpt(-2:N3p) )
       ALLOCATE(   Mlw( Ns ) )   
 
-C     Molecular Weight
-      Mlw(1)=1.0  
-      Mlw(2)=1.0
-      Mlw(3)=1.0
-      Mlw(4)=1.0
-      Mlw(5)=1.0
-      Mlw(6)=1.0
-      Mlw(7)=1.0
-      Mlw(8)=1.0
-      Mlw(9)=1.0  
+C     ¡¾Names of Species¡¿
+      CALL CKSYMS (CWORK,6,SPNAME,KERR)
+C     Species Sequence => H2, O2, O, OH, H2O, H, HO2, H2O2, N2
+
+C     ¡¾ Molecular Weights of Species¡¿ [ g/mol ]
+      CALL CKWT (IWORK,RWORK,Mlw) 
 
 
-C     End Time
-      ETime=0.01_8 
-C     Mesh Size
-      Length=2.0_8
+C     End Time [ s ]
+      ETime=1.E-3_8
+C     Mesh Size [ cm ]
+      Length=12.0_8
       dh=Length/N
 C     Coordinates(Cell Center)
       DO I=-2,N3p
