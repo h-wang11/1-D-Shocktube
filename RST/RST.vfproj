@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VisualStudioProject ProjectCreator="Intel Fortran" Keyword="Console Application" Version="11.0" ProjectIdGuid="{A5AAE0E9-79BB-46EC-89EB-FC661E32009E}">
+	<Platforms>
+		<Platform Name="Win32"/></Platforms>
+	<Configurations>
+		<Configuration Name="Debug|Win32">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" FixedFormLineLength="fixedLength132" WarnInterfaces="true" Traceback="true" BoundsCheck="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" GenerateDebugInformation="true" SubSystem="subSystemConsole"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|Win32">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" RuntimeLibrary="rtMultiThreadedDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" SubSystem="subSystemConsole"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration></Configurations>
+	<Files>
+		<Filter Name="Header Files" Filter="fi;fd"/>
+		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
+		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
+		<Filter Name="1_Setup_Initialization">
+		<File RelativePath=".\1_Setup_Initialization\0_Setup.for"/>
+		<File RelativePath=".\1_Setup_Initialization\1_Initialization.for"/></Filter>
+		<Filter Name="2_Re-Construction">
+		<File RelativePath=".\2_Re-Construction\0_Limiters.for"/>
+		<File RelativePath=".\2_Re-Construction\0_Re-Constructions.for"/>
+		<File RelativePath=".\2_Re-Construction\1_3rd_MUSCL.for"/></Filter>
+		<Filter Name="3_1_Convective Flux">
+		<File RelativePath=".\3_1_Convective Flux\0_All_Flux_Convective.for"/>
+		<File RelativePath=".\3_1_Convective Flux\1_AUSMPW_Plus.for"/></Filter>
+		<Filter Name="3_2_Viscous Flux"/>
+		<Filter Name="3_3_Source Term"/>
+		<Filter Name="4_Time Advance">
+		<File RelativePath=".\4_Time Advance\0_Time-Advance.for"/>
+		<File RelativePath=".\4_Time Advance\1_Update.for"/>
+		<File RelativePath=".\4_Time Advance\3_3rd_Explicit_TVD-Runge-Kutta.for"/></Filter>
+		<Filter Name="5_BC">
+		<File RelativePath=".\5_BC\BC.for"/></Filter>
+		<Filter Name="6_Output"/>
+		<File RelativePath=".\Global.for"/>
+		<File RelativePath=".\Main.for"/></Filter></Files>
+	<Globals/></VisualStudioProject>
