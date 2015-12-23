@@ -1,0 +1,10 @@
+        !COMPILER-GENERATED INTERFACE MODULE: Tue Dec 22 18:51:18 2015
+        MODULE CKCHRG__genmod
+          INTERFACE 
+            SUBROUTINE CKCHRG(ICKWRK,RCKWRK,KCHARG)
+              INTEGER(KIND=4) :: ICKWRK(*)
+              REAL(KIND=8) :: RCKWRK(*)
+              INTEGER(KIND=4) :: KCHARG(*)
+            END SUBROUTINE CKCHRG
+          END INTERFACE 
+        END MODULE CKCHRG__genmod

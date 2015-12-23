@@ -1,0 +1,9 @@
+        !COMPILER-GENERATED INTERFACE MODULE: Tue Dec 22 18:51:19 2015
+        MODULE IFIRCH__genmod
+          INTERFACE 
+            FUNCTION IFIRCH(STRING)
+              CHARACTER(*) :: STRING
+              INTEGER(KIND=4) :: IFIRCH
+            END FUNCTION IFIRCH
+          END INTERFACE 
+        END MODULE IFIRCH__genmod

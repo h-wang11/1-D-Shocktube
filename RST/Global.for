@@ -1,5 +1,23 @@
       MODULE Global
       IMPLICIT NONE
+
+C     Program Units adopt CGS [ Centimeter-Gram-Second ] :
+C                                                             Length          = [ cm ]
+C                                                             Time            = [ Second ]/s
+C                                                             Mass            = [ Gram ]/g
+C                                                             Temperature     = [ Kelvin ]/K
+C                                                          =>
+C                                                             Force  = [ g*cm/s^2] = [ dynes ]
+C                                                             Energy = [ g*cm*/s^2*cm ] = [ g*cm^2/s^2 ] = [ ergs ]
+C                                                             Specific Heat = [ ergs/(mol*K) ]
+C                                                             Specific Enthalpy = [ ergs/g ] = [ cm^2/s^2 ]
+C                                                             Molecular Weight = [ g/mol ]
+C                                                             Mole Production Rate = [ mol/(cm^3*s) ]
+C                                                             Diffusion Coef. = [ cm^2/s ]
+C                                                             Dynamic Viscousity = [ g/(cm*s) ]
+C                                                             Thermal Conductivity = [ ergs/(cm*K*s) ]
+C                                                             
+C                     
       
       INTEGER :: Iter
       INTEGER :: N                            ! Mesh Nodes
@@ -17,14 +35,16 @@
       REAL*8,ALLOCATABLE :: X(:)                              ! Mesh Coordinates
       REAL*8,ALLOCATABLE :: Rho(:,:),U(:,:),P(:,:),Msf(:,:,:) ! 重构的左右状态： 密度, 速度, 压力, 组份质量分数( Mass Fraction )
       REAL*8,ALLOCATABLE :: Mlw(:)                            ! Molecular Weight of Each Species [ g/mol ]
+      REAL*8,ALLOCATABLE :: H(:,:)                            ! Enthalpy of Each Species [ (Ns,I) ]
       REAL*8,ALLOCATABLE :: Dfc(:,:)                          ! Diffusion Coefficient    [ ( Ns, I ) ]
       REAL*8,ALLOCATABLE :: Mu(:)                             ! Viscosity of Mixture [ ( I ) ]
       REAL*8,ALLOCATABLE :: Cc(:)                             ! Conductivity Coefficient of Mixture [ ( I ) ]
+      CHARACTER*16,ALLOCATABLE :: SPNAME(:)                   ! Names of Species
 
 C     Other Necessary Variables ?... Remain to be added..
 C     ...
-      INTEGER :: Ns                           ! Number of Species
-      INTEGER :: NT                           ! Number of total conserved variables ! NT = Ns + 3
+      INTEGER :: Ns,Ns1                       ! Number of Species, Ns1=Ns-1
+      INTEGER :: NT,NT1                       ! Number of total conserved variables ! NT = Ns + 3 , NT1=NT-1
 
 
 
@@ -35,60 +55,14 @@ C     ...
       REAL*8 :: ETime                                        ! 计算终止时刻
       CHARACTER(8) :: NN                                     ! 输出格点数
       
-      REAL*8,PARAMETER :: Tpt0=298.15                        ! Reference Temperature   [ K ]
       REAL*8,PARAMETER :: Pi=3.1415926535898_8               ! Pi
-      REAL*8,PARAMETER :: R0=8.31441                         ! Universal Gas Constant [ J/(mol*K) ]
       REAL*8,PARAMETER :: Tiny=1.0E-20_8                     ! 避免分母为零
+      REAL*8,DIMENSION(2),PARAMETER :: X0=( /400_8,800_8/ )               ! Initial Temperature for Secant Method
+
+      REAL*8 :: R0                    ! Universal Gas Constant [ ergs/(mol*K) ]
+
            
       
       END MODULE Global
 
 
-C=========================================================================
-
-      SUBROUTINE Get_Tpt(R,P,Y, T)
-      USE Global, ONLY: Ns,Mlw,R0
-      IMPLICIT NONE
-      REAL*8 :: YR,Y(Ns)
-      INTEGER :: I
-C     Get Temperature from Equation of State
-C         R = Density
-C         P = Pressure
-C         Y = Mass Fraction
-C         T = Temeprature 
-C        Mlw= Molecular Weight of each species
-C         R0= Universal Gas Constant [ J/(mol*K) ]
-
-          YR=0.0_8
-                  
-          DO I=1,Ns
-              YR=YR + Y(I)/Mlw(I) 
-          END DO
-
-          T=P/R/( YR*R0*1.0E3_8 )  ! 1.0E3_8 => from g to kg 
-
-      END SUBROUTINE Get_Tpt
-C---------------------------------------------------------------
-
-      SUBROUTINE Get_P(R,Y,T, P)
-      USE Global, ONLY: Ns,Mlw,R0
-      IMPLICIT NONE
-      REAL*8 :: YR,Y(Ns)
-      INTEGER :: I
-C     Get Pressure from Equation of State
-C         R = Density
-C         P = Pressure
-C         Y = Mass Fraction
-C         T = Temeprature 
-C        Mlw= Molecular Weight of each species
-C         R0= Universal Gas Constant [ J/(mol*K) ]
-
-          YR=0.0_8
-                  
-          DO I=1,Ns
-              YR=YR + Y(I)/Mlw(I) 
-          END DO
-
-          P=R*T*( YR*R0*1.0E3_8 ) ! 1.0E3_8 => from g to kg 
-
-      END SUBROUTINE Get_P

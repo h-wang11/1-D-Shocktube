@@ -1,0 +1,9 @@
+        !COMPILER-GENERATED INTERFACE MODULE: Tue Dec 22 18:51:24 2015
+        MODULE XGETUA__genmod
+          INTERFACE 
+            SUBROUTINE XGETUA(IUNITA,N)
+              INTEGER(KIND=4) :: IUNITA(5)
+              INTEGER(KIND=4) :: N
+            END SUBROUTINE XGETUA
+          END INTERFACE 
+        END MODULE XGETUA__genmod

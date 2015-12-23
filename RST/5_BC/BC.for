@@ -7,7 +7,7 @@ C         Non-Reflection Farfield
 
           DO I=-2,0
               Q1(:,I)=Q1(:,1)
-              F1(:,I)=F1(:,1)
+              F1(:,I)=F1(:,1)    
           END DO
           
           DO I=N1p,N3p

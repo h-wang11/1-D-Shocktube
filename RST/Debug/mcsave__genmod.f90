@@ -1,0 +1,11 @@
+        !COMPILER-GENERATED INTERFACE MODULE: Tue Dec 22 18:51:22 2015
+        MODULE MCSAVE__genmod
+          INTERFACE 
+            SUBROUTINE MCSAVE(LOUT,LSAVE,IMCWRK,RMCWRK)
+              INTEGER(KIND=4) :: LOUT
+              INTEGER(KIND=4) :: LSAVE
+              INTEGER(KIND=4) :: IMCWRK(*)
+              REAL(KIND=8) :: RMCWRK(*)
+            END SUBROUTINE MCSAVE
+          END INTERFACE 
+        END MODULE MCSAVE__genmod

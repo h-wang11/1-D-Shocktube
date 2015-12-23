@@ -1,0 +1,8 @@
+        !COMPILER-GENERATED INTERFACE MODULE: Tue Dec 22 18:51:24 2015
+        MODULE XERHLT__genmod
+          INTERFACE 
+            SUBROUTINE XERHLT(MESSG)
+              CHARACTER(*) :: MESSG
+            END SUBROUTINE XERHLT
+          END INTERFACE 
+        END MODULE XERHLT__genmod
