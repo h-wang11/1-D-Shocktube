@@ -67,7 +67,9 @@
 		<Filter Name="3_2_Viscous Flux">
 		<File RelativePath=".\3_2_Viscous Flux\0_All_Flux_Viscous.for"/>
 		<File RelativePath=".\3_2_Viscous Flux\1_Transport Coefs.for"/></Filter>
-		<Filter Name="3_3_Source Term"/>
+		<Filter Name="3_3_Source Term">
+		<File RelativePath=".\0_All_Source.for"/>
+		<File RelativePath=".\1_Reaction_Source.for"/></Filter>
 		<Filter Name="4_Time Advance">
 		<File RelativePath=".\4_Time Advance\0_Time-Advance.for"/>
 		<File RelativePath=".\4_Time Advance\1_Update.for"/>

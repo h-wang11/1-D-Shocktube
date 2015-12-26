@@ -94,7 +94,7 @@ C                 *************************¸ñÐÄ×ó²à*************************
                   U(1,I)=UL(2)/UL(1)
 
 C                 Get Temprature  || From ¡¾ Total Specific Internal Energy ¡¿ to Temperature
-                  a = UL(3)/UL(1) - 0.5*U(1,I)**2
+                  a = UL(3)/UL(1) - 0.5*U(1,I)**2 !!!!!!!!!!!!!!!!!!!!!Tiger!!!!!!!!!!!!!!!!!!!!!!
                   Tpt_ = Secant( X0, a, Msf(1,:,I), E_to_T, 1.E-3_8, 100 )
 
 C                 Pressure  [ g/(cm*s^2) ]

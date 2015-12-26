@@ -23,7 +23,7 @@ C         第1级迭代
 
               !CALL Get_Transport                     ! 输运系数计算
               !CALL Get_All_Viscous_Flux              ! 粘性通量
-              !CALL Get_Source                        ! 反应源项
+              CALL Get_All_Source                        ! 反应源项
               DO I=1,N
                   IP=I+1
                   F(:,I)=F1(:,I) - dt/dh*( Gc(:,IP)-Gc(:,I) ) 
