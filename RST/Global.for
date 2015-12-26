@@ -8,6 +8,7 @@ C                                                             Mass            = 
 C                                                             Temperature     = [ Kelvin ]/K
 C                                                          =>
 C                                                             Force  = [ g*cm/s^2] = [ dynes ]
+C                                                             Pressure = [ g/(cm*s^2) ]= [ 1E-3kg/(1E-2m)*s^2 ] = [ 0.1 Pa ]
 C                                                             Energy = [ g*cm*/s^2*cm ] = [ g*cm^2/s^2 ] = [ ergs ]
 C                                                             Specific Heat = [ ergs/(mol*K) ]
 C                                                             Specific Enthalpy = [ ergs/g ] = [ cm^2/s^2 ]
@@ -24,7 +25,13 @@ C
       INTEGER :: N1p,N2p,N3p,N1m,N2m,N3m      ! N1p=N+1,N1m=N-1  
       INTEGER :: ReConstruct_TYPE             ! Type of Re-Consturction  
       INTEGER :: ReConstruct_PC               ! Re-Constructed Variables [ Primitive / Conserved ]
-            
+      INTEGER :: IF_Transport                 ! [ 0 = No Diffusion Terms, 1 = With Diffusion Terms ]
+      INTEGER :: IF_Reaction                  ! [ 0 = No Chemical Reaction Source Term, 1 = With Chemical Reaction Mass Production Source Terms ]
+      INTEGER :: BC_Kind                      ! [ Boundary Conditions : 1= Non-Reflection Farfield , 2= Reflective Wall ] 
+      INTEGER :: IF_Continue                  ! [ 1= 续算, 0= 从头算 ]
+      INTEGER :: OutD   
+
+    
       REAL*8,ALLOCATABLE :: Q1(:,:)                           ! 原始变量 [ (rho,u,p,Y1...); I ]
       REAL*8,ALLOCATABLE :: Tpt(:)                            ! 原始变量 => Temperature
       REAL*8,ALLOCATABLE :: F(:,:),F0(:,:),F1(:,:)            ! 守恒变量 [ (rho,rho*u,rho*et,rho*Y1...); I ]： F 为中间时刻, F0 为 N-1时刻, F1 为 N 时刻
@@ -57,7 +64,9 @@ C     ...
       
       REAL*8,PARAMETER :: Pi=3.1415926535898_8               ! Pi
       REAL*8,PARAMETER :: Tiny=1.0E-20_8                     ! 避免分母为零
-      REAL*8,DIMENSION(2),PARAMETER :: X0=( /400_8,800_8/ )               ! Initial Temperature for Secant Method
+      REAL*8,PARAMETER :: TOL_=1.E-1                         ! 割线法精度控制
+      REAL*8,PARAMETER :: atm= 1013250.0_8                   ! 1 个大气压 = 101325 Pa = 1013250 g/(cm*s^2)
+      REAL*8,DIMENSION(2),PARAMETER :: X0=( /2500.0_8,2000.0_8/ )               ! Initial Temperature for Secant Method
 
       REAL*8 :: R0                    ! Universal Gas Constant [ ergs/(mol*K) ]
 

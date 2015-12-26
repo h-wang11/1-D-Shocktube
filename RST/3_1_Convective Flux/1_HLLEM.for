@@ -1,6 +1,6 @@
       SUBROUTINE Get_HLLEM_Flux(Rl,Rr,Ul,Ur,Pl,Pr,Msf_L,Msf_R, G_)   ! Only G_ is Output
       USE Chem
-      USE Global, ONLY: Ns,Ns1,NT,R0,Mlw,X0
+      USE Global, ONLY: Ns,Ns1,NT,R0,Mlw,X0,TOL_
       IMPLICIT NONE
 C     HLLEM for convective numerical flux
 C     割线法函数接口
@@ -96,21 +96,26 @@ C                     Hs=H_Roe-Average => Ts => Gamma_s => Ss=SQRT(Gamma_s*R*Ts)
 C     Second, Need to Calculate Temperatures of Both L&R side from Total Enthalpy, and Twice
 C                     Ts=T_Roe-Average =>       Gamma_s => Ss=SQRT(Gamma_s*R*Ts) 
 C     Remain to be Compared, further investigation
-C     Suggestion: USE the FIRST method                                            
+C     Suggestion: USE the FIRST method  !!! NO!~ NO!~ NO!~
+C     It's shown that from Hs to Ts ,the Secant Method can't converge sometimes
+C     This is Because Hs,Msf_s are usually non-physical                                           
 
 C     Average Sonic Speed
-C     Hs - SUM( Yi_s*hi(Ts) ) - 0.5*Us^2 =0
-C                                             <=>  a       - SUM(Yi*hi) =0  || a = Hs - 0.5*Us^2
-C             Get Temprature  || From 【 Total Specific Enthalpy 】 to Temperature
-              a = Hs - 0.5*Us**2
-              Ts = Secant( X0, a, Msf_s, H_to_T, 1.E-3_8, 100 )
-
-      CALL Get_WTM( Msf_s, Mlw, WTM )                    
-      R_s=R0/WTM       
-      CALL CKCPMS (Ts, IWORK, RWORK, CPMS)  ! Returns the specific heats at constant pressure in mass units || [ ergs/(g*K) ]
-      Cps= DOT_PRODUCT( Msf_s, CPMS )
-      Gamma_s= Cps/( Cps-R_s )                                
-      Ss= SQRT( Gamma_s*R_s*Ts )
+C*****************************************************Bad*****************************************************
+!C     Hs - SUM( Yi_s*hi(Ts) ) - 0.5*Us^2 =0
+!C                                             <=>  a       - SUM(Yi*hi) =0  || a = Hs - 0.5*Us^2
+!C             Get Temprature  || From 【 Total Specific Enthalpy 】 to Temperature
+!              a = Hs - 0.5*Us**2
+!              Ts = Secant( X0, a, Msf_s, H_to_T, TOL_, 1000 )
+!
+!      CALL Get_WTM( Msf_s, Mlw, WTM )                    
+!      R_s=R0/WTM       
+!      CALL CKCPMS (Ts, IWORK, RWORK, CPMS)  ! Returns the specific heats at constant pressure in mass units || [ ergs/(g*K) ]
+!      Cps= DOT_PRODUCT( Msf_s, CPMS )
+!      Gamma_s= Cps/( Cps-R_s )                                
+!      Ss= SQRT( Gamma_s*R_s*Ts )
+C*************************************************************************************************************
+      Ss=L*Sl+R*Sr
 
       al=Ul - Sl
       ar=Ur + Sr

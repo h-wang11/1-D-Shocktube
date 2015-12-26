@@ -53,7 +53,7 @@ C                                                to maintain mass conservation o
 
 C             Get Temprature  || From 【 Total Specific Internal Energy 】 to Temperature
               a = F1(3,I)/F1(1,I) - 0.5*Q1(2,I)**2
-              Tpt(I) = Secant( X0, a, Q1(4:NT,I), E_to_T, 1.E-3_8, 100 )
+              Tpt(I) = Secant( X0, a, Q1(4:NT,I), E_to_T, TOL_, 1000 )
 
 C                 ht= SUM(Yi*hi) + 0.5*u^2 = et + R*T        ! R = Mean Gas Constant of the Mixture
 C                 => F1(3,I)/F1(1,I) + R*T - [ SUM(Yi*hi) + 0.5*u^2 ] =0  || By Newton-Raphson( Secant Method ) Iterations
@@ -95,6 +95,9 @@ C=====================================Secant Method=============================
 
       REAL*8,EXTERNAL :: F        ! 迭代函数
 
+C     NOTE:
+C             初始的两个值所确定的自变量区间，“一定要包含零点” ！！！
+
 C     首先确定初始函数值
           X1=X0(1)
           X2=X0(2)
@@ -105,6 +108,7 @@ C     首先确定初始函数值
           DO I=1,MAX_Iter
           
               DF=ABS(F1-F2)
+              !WRITE(1000,*)DF,X1
               IF ( DF.LT.Epsilon ) THEN
                   EXIT
               END IF
@@ -117,6 +121,8 @@ C     首先确定初始函数值
               X1=Secant           
 
               F1=F( a, Msf, Secant )      ! 确定当前迭代步F1
+
+
 
           END DO
 
@@ -142,7 +148,7 @@ C                                                         <=>  a + R*T - SUM(Yi*
       REAL*8 :: Msf(Ns)
       REAL*8 :: WTM,R,HBMS
 
-      CALL Get_WTM( Msf, Mlw, WTM )                 ! 1_HLLEM.for\Get_WTM   | Meanmolecular weight of the gas mixture
+      CALL Get_WTM( Msf, Mlw, WTM )                 ! 1_HLLEM.for\Get_WTM   | Mean molecular weight of the gas mixture
       R=R0/WTM 
       CALL CKHBMS( T, Msf, IWORK, RWORK, HBMS )     ! HBMS = Mean Specific Enthalpy of the Gas Mixture [ ergs/g ]
 
@@ -157,8 +163,7 @@ C========================================Function H_to_T========================
       USE Global, ONLY: Ns
       IMPLICIT NONE
       REAL*8 :: H_to_T
-C     Hs - SUM( Yi_s*hi(Ts) ) - 0.5*Us^2 =0
-C                                             <=>  a       - SUM(Yi*hi) =0  || a = Hs - 0.5*Us^2
+C     Hs - SUM( Yi_s*hi(Ts) ) - 0.5*Us^2 =0   <=>  a - SUM(Yi*hi) =0  || a = Hs - 0.5*Us^2
      
       REAL*8 :: a,T
       REAL*8 :: Msf(Ns)

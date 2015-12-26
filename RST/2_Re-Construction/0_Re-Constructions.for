@@ -94,8 +94,8 @@ C                 *************************格心左侧*************************
                   U(1,I)=UL(2)/UL(1)
 
 C                 Get Temprature  || From 【 Total Specific Internal Energy 】 to Temperature
-                  a = UL(3)/UL(1) - 0.5*U(1,I)**2 !!!!!!!!!!!!!!!!!!!!!Tiger!!!!!!!!!!!!!!!!!!!!!!
-                  Tpt_ = Secant( X0, a, Msf(1,:,I), E_to_T, 1.E-3_8, 100 )
+                  a = UL(3)/UL(1) - 0.5*U(1,I)**2
+                  Tpt_ = Secant( X0, a, Msf(1,:,I), E_to_T, TOL_, 1000 )
 
 C                 Pressure  [ g/(cm*s^2) ]
                   CALL CKPY( Rho(1,I), Tpt_, Msf(1,:,I), IWORK, RWORK, P(1,I) ) 
@@ -107,7 +107,7 @@ C                 *************************格心右侧*************************
 
 C                 Get Temprature  || From 【 Total Specific Internal Energy 】 to Temperature
                   a = UR(3)/UR(1) - 0.5*U(2,I)**2
-                  Tpt_ = Secant( X0, a, Msf(2,:,I), E_to_T, 1.E-3_8, 100 )
+                  Tpt_ = Secant( X0, a, Msf(2,:,I), E_to_T, TOL_, 1000 )
 
 C                 Pressure  [ g/(cm*s^2) ]
                   CALL CKPY( Rho(2,I), Tpt_, Msf(2,:,I), IWORK, RWORK, P(2,I) )

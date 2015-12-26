@@ -8,7 +8,7 @@
 C     ============================Initialization============================
 C     CHEMIKIN & Transport Initialization
       CALL CHEM_INIT
-      !CALL TRAN_INIT
+      CALL TRAN_INIT
 C     Number of Species
       Ns=KK
       Ns1=Ns-1
@@ -17,12 +17,28 @@ C     Total Number of Conserved Variables
       NT1=NT-1
 
 C     Type of Re-Consturction [ 0=No Reconstruction, 1= 3rd-MUSCL + XQ_Limiter ]
-      ReConstruct_TYPE= 1
+      ReConstruct_TYPE= 0
 C     Re-Constructed Variables [ 1= Primitive, 2= Conserved ]
       ReConstruct_PC= 2
+      IF ( ReConstruct_TYPE.EQ.0) THEN  
+          ReConstruct_PC = 1
+      END IF
+
+C     Continue ? = 是否续算 [ 0=No, 1=Yes ]
+      IF_Continue=0
+C     Output Distance= 备份文件储存间隔（每迭代 * 步 输出一次储存文件）
+      OutD=500 
+
+C     Kind of Boundary Conditions
+      BC_Kind=1
+
+C     Diffusion Terms  [ 0 = No Diffusion Terms, 1= With Diffusion Terms ]
+      IF_Transport=0
+C     Chemical Reaction Source Terms [ 0 = No Chemical Reaction Source Term, 1 = With Chemical Reaction Mass Production Source Terms ]
+      IF_Reaction=0                
 
 C     Dt [ s ]
-      dt=1.0E-7_8
+      dt=1.0E-8_8
 C     Node Number
       N=400
       N1p=N+1;N3p=N+3;N1m=N-1
