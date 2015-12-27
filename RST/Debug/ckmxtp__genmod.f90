@@ -1,9 +1,0 @@
-        !COMPILER-GENERATED INTERFACE MODULE: Tue Dec 22 18:51:18 2015
-        MODULE CKMXTP__genmod
-          INTERFACE 
-            SUBROUTINE CKMXTP(ICKWRK,MAXTP)
-              INTEGER(KIND=4) :: ICKWRK(*)
-              INTEGER(KIND=4) :: MAXTP
-            END SUBROUTINE CKMXTP
-          END INTERFACE 
-        END MODULE CKMXTP__genmod

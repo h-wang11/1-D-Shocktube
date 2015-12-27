@@ -1,7 +1,0 @@
-        !COMPILER-GENERATED INTERFACE MODULE: Tue Dec 22 18:51:22 2015
-        MODULE MCABS__genmod
-          INTERFACE 
-            SUBROUTINE MCABS
-            END SUBROUTINE MCABS
-          END INTERFACE 
-        END MODULE MCABS__genmod

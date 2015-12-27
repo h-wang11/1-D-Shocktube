@@ -1,9 +1,0 @@
-        !COMPILER-GENERATED INTERFACE MODULE: Tue Dec 22 18:51:19 2015
-        MODULE ILASCH__genmod
-          INTERFACE 
-            FUNCTION ILASCH(STRING)
-              CHARACTER(*) :: STRING
-              INTEGER(KIND=4) :: ILASCH
-            END FUNCTION ILASCH
-          END INTERFACE 
-        END MODULE ILASCH__genmod

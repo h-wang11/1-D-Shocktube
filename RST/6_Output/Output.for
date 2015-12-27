@@ -1,25 +1,26 @@
       SUBROUTINE Output
       USE Global
       IMPLICIT NONE
-      INTEGER :: I
+      INTEGER :: I,i2
+      CHARACTER(LEN=600)  :: titles
 
       WRITE(NN,'(I8.8)')N
 
 C                     Species Sequence  => H2,  O2,  O,  OH,  H2O,  H,  HO2,  H2O2,  N2
 C                                 Q1(:,I)   4    5   6    7    8    9    10     11   12
-
+      titles='X  Rho  U  P'
       OPEN(1,FILE='Result.dat',ACTION='WRITE')
-          WRITE(1,'(A,A)')'Variables= ',' "X" "U" "Rho" "P" "T" "N2" "H2" "O2" "OH" "O" "H2O" "H" "HO2" "H2O2" '
-          WRITE(1,'(4A)')'Zone T=','"','1D-Reactive Shock Tube','"'
-          WRITE(1,'(A,A,A)')'I=',NN,', DATAPACKING=POINT '
-
+          WRITE(1,'(a)')'%--------Zone T='//'  '//'1D-Reactive Shock Tube '
+          WRITE(1,'(a)')'%----------------------------------------------------------------'
+          WRITE(1,'(A,A,A)')'Time steps =',NN,', DATAPACKING=POINT '
+          DO I=1,NS
+              titles = trim(titles)//'  '//trim(SPNAME(I))
+          ENDDO
+          titles = trim(titles)//'  '//'T'
+          WRITE(1,'(a)') trim(titles)
           DO I=1,N
-
-              WRITE(1,'(14(E12.6,4X))')X(I),Q1(2,I),Q1(1,I),Q1(3,I),Tpt(I),Q1(12,I),Q1( 4,I),Q1( 5,I),
-     >                                                                     Q1( 7,I),Q1( 6,I),Q1( 8,I),
-     >                                                                     Q1( 9,I),Q1(10,I),Q1(11,I)
+              WRITE(1,'(14(E12.6,4X))') X(I),(Q1(i2,I),i2=1,NT),Tpt(I)
           END DO
-
       CLOSE(1)
 
       END SUBROUTINE Output
